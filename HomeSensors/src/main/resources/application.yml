@@ -1,0 +1,10 @@
+sensors:
+    serial-number: 448438
+    
+spring:
+    datasource:
+      url: jdbc:mysql://localhost/sensors
+      username: sensors
+      password: sensors
+      driver-class-name: com.mysql.jdbc.Driver
+    
