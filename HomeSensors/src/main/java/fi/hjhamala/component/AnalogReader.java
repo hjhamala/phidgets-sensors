@@ -35,13 +35,15 @@ public class AnalogReader {
 	@Autowired
 	private HomeSensorsProperties properties;	
 	
+	private InterfaceKitPhidget ik;
+	
 	public int getValue(int port) throws PhidgetException{
-		InterfaceKitPhidget ik = new InterfaceKitPhidget();
-		ik.open(properties.getSerialNumber());
-		ik.waitForAttachment();
-		int value = ik.getSensorValue(port);
-		ik.close();
-		return value;
+		if (ik == null){
+			ik = new InterfaceKitPhidget();
+			ik.open(properties.getSerialNumber());
+			ik.waitForAttachment();
+		}
+		return ik.getSensorValue(port);
 	}
 
 }

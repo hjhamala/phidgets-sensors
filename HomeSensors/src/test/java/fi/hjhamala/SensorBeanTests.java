@@ -22,6 +22,7 @@ public class SensorBeanTests {
 	@Rollback(true)
 	@Test
 	public void testSaveAndDelete() {
+		sensorRepository.deleteAll();
 		Sensor a = new Sensor();
 		a.setPort(0);
 		a.setType(0);
