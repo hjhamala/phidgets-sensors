@@ -1,10 +1,11 @@
-package fi.hjhamala.service;
+package fi.hjhamala.component;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -25,30 +26,22 @@ import com.phidgets.event.TemperatureChangeEvent;
 import com.phidgets.event.TemperatureChangeListener;
 
 import fi.hjhamala.HomeSensorsApplication;
+import fi.hjhamala.HomeSensorsProperties;
 @Component
 public class AnalogReader {
 	private static final Log logger = LogFactory
 			.getLog(HomeSensorsApplication.class);
 	
-	public static void main(String[] args) throws PhidgetException, IOException, InterruptedException{
-		InterfaceKitPhidget ik;
-
-		//Example of enabling logging.
-		//Phidget.enableLogging(Phidget.PHIDGET_LOG_VERBOSE, null);
-
-		System.out.println(Phidget.getLibraryVersion());
-
-		ik = new InterfaceKitPhidget();
-		ik.openAny();
-		ik.waitForAttachment();
-		System.out.println(ik.getDeviceID());
-		int value = ik.getSensorValue(0);
-		System.out.println(value*0.2222-61.111);
-
-	}
+	@Autowired
+	private HomeSensorsProperties properties;	
 	
-	@Scheduled(fixedDelay=5000)
-	public void doSomething() {
-	    logger.info("Hep");
+	public int getValue(int port) throws PhidgetException{
+		InterfaceKitPhidget ik = new InterfaceKitPhidget();
+		ik.open(properties.getSerialNumber());
+		ik.waitForAttachment();
+		int value = ik.getSensorValue(port);
+		ik.close();
+		return value;
 	}
+
 }

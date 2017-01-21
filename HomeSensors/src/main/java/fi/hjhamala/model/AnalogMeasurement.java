@@ -1,5 +1,7 @@
 package fi.hjhamala.model;
 
+import static org.mockito.Matchers.anyLong;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -9,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.Transient;
 
 @Entity
 public class AnalogMeasurement {
@@ -23,6 +27,7 @@ public class AnalogMeasurement {
 	private Sensor sensor;
 	
 	private LocalDateTime dateTime;
+	
 	
 	public Long getId() {
 		return id;
@@ -56,7 +61,21 @@ public class AnalogMeasurement {
 		this.sensor = sensor;
 	}
 
-
+	public double getCelsiusValue(){
+		return getValue()*0.2222-61.111;
+	}
+	
+	@Override 
+	public boolean equals(Object cmp){
+		AnalogMeasurement a = (AnalogMeasurement) cmp;
+		return 	getSensor().getId() == a.getSensor().getId() && 
+				getValue() == a.getValue() && 
+				getDateTime().equals(a.getDateTime()) 
+				? true : false;
+		
+	}
+	
+	
 	
 	
 }
