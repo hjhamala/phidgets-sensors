@@ -43,7 +43,7 @@ public class AnalogMeasurement {
 
 	public void setValue(int value) {
 		
-		this.value = (int) (value * getSensor().getGainFactor());
+		this.value = (int) ((value -500) * getSensor().getGainFactor() + 500);
 	}
 
 	public LocalDateTime getDateTime() {

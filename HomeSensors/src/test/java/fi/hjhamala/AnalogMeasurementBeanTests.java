@@ -63,13 +63,13 @@ public class AnalogMeasurementBeanTests {
 		Sensor sensor = new Sensor();
 		sensor.setPort(0);
 		sensor.setType(0);
-		sensor.setGainFactor(1.1);
+		sensor.setGainFactor(1.026);
 		sensorRepository.save(sensor);
 		AnalogMeasurement measurement = new AnalogMeasurement();
 		measurement.setSensor(sensor);
 		measurement.setDateTime(LocalDateTime.now());
 		measurement.setValue(68);
-		int expected = (int) (68 * 1.1);
+		int expected = (int) ((68 -500) * 1.026 + 500);
 		assertEquals(expected, measurement.getValue());
 	}
 
