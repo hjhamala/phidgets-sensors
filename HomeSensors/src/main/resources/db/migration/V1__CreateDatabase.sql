@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS `sensor` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `port` int(11) NOT NULL,
   `type` int(11) NOT NULL,
+  `gain_factor` FLOAT default 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 

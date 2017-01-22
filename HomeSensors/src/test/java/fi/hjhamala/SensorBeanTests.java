@@ -26,6 +26,7 @@ public class SensorBeanTests {
 		Sensor a = new Sensor();
 		a.setPort(0);
 		a.setType(0);
+		a.setGainFactor(1.1);
 		sensorRepository.save(a);
 		Sensor saved = sensorRepository.findOne(a.getId());
 		assertEquals(a, saved);
