@@ -14,6 +14,9 @@ public class Sensor {
 	private int port;
 	private int type;
 	private double gainFactor;
+	private boolean active;
+	private int alertMin;
+	private int alertMax;
 	
 	public Long getId() {
 		return id;
@@ -40,6 +43,30 @@ public class Sensor {
 		this.gainFactor = gainFactor;
 	}
 	
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public int getAlertMin() {
+		return alertMin;
+	}
+
+	public void setAlertMin(int alertMin) {
+		this.alertMin = alertMin;
+	}
+
+	public int getAlertMax() {
+		return alertMax;
+	}
+
+	public void setAlertMax(int alertMax) {
+		this.alertMax = alertMax;
+	}
+
 	@Override
 	public boolean equals(Object a){
 		Sensor comp = (Sensor) a;
