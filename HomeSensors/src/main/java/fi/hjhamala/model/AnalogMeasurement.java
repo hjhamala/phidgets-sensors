@@ -29,6 +29,16 @@ public class AnalogMeasurement {
 	private LocalDateTime dateTime;
 	
 	
+	public AnalogMeasurement(){
+		
+	}
+	
+	public AnalogMeasurement(Sensor sensor, LocalDateTime dateTime, int value) {
+		this.sensor = sensor;
+		this.dateTime = dateTime;
+		this.value = value;
+	}
+
 	public Long getId() {
 		return id;
 	}

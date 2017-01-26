@@ -7,4 +7,6 @@ spring:
       username: sensors
       password: sensors
       driver-class-name: com.mysql.jdbc.Driver
+    jpa:
+      show-sql: true
     

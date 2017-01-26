@@ -41,7 +41,7 @@ public class AnalogReader {
 		if (ik == null){
 			ik = new InterfaceKitPhidget();
 			ik.open(properties.getSerialNumber());
-			ik.waitForAttachment();
+			ik.waitForAttachment(10);
 		}
 		return ik.getSensorValue(port);
 	}
