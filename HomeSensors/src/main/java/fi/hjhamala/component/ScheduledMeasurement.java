@@ -7,12 +7,14 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.phidgets.PhidgetException;
 
 import fi.hjhamala.HomeSensorsApplication;
+import fi.hjhamala.HomeSensorsProperties;
 import fi.hjhamala.model.AnalogMeasurement;
 import fi.hjhamala.model.AnalogMeasurementRepository;
 import fi.hjhamala.model.Sensor;
@@ -32,7 +34,8 @@ public class ScheduledMeasurement {
 	@Autowired
 	private AnalogReader analogReader;
 	
-	@Scheduled(fixedDelay=10000)
+	
+	@Scheduled(fixedDelayString="${sensors.temperature-polling-ms}")
 	public void saveValues() {
 		List<Sensor> sensors = sensorRepository.findAll();
 		log.info("Starting reading values");
