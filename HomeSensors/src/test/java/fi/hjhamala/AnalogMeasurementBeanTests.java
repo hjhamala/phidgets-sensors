@@ -97,6 +97,30 @@ public class AnalogMeasurementBeanTests {
 		
 	}
 	
+	@Rollback(true)
+	@Test
+	@Transactional
+	public void testCheckAlert(){
+		sensorRepository.deleteAll();
+		analogMeasurementRepository.deleteAll();
+		Sensor sensor1 = initializeSensor(0);
+		sensor1.setAlertMin(40);
+		sensor1.setAlertMax(80);
+		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusMinutes(1), 60));
+		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusMinutes(2), 30));
+		List<AverageTemperatureStatistics> avg = analogMeasurementRepository.getAverageTemperatureAfterDateTime(LocalDateTime.now().minusMinutes(3));
+		
+		AverageTemperatureStatistics sensor1Avg= avg.get(0);
+		
+		assertFalse(sensor1Avg.getSensor().checkAlert(sensor1Avg.getAverageTemperature()));
+		// lets add some worrying statistic
+		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusMinutes(1), 180));
+		avg = analogMeasurementRepository.getAverageTemperatureAfterDateTime(LocalDateTime.now().minusMinutes(3));
+		sensor1Avg= avg.get(0);
+		assertTrue(sensor1Avg.getSensor().checkAlert(sensor1Avg.getAverageTemperature()));
+	}
+
+	
 	public Sensor initializeSensor(int port){
 			Sensor sensor = new Sensor();
 			sensor.setPort(port);

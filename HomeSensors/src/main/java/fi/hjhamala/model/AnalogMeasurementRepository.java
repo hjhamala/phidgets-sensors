@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 public interface AnalogMeasurementRepository extends JpaRepository<AnalogMeasurement, Long> {
 
 		
-	@Query("SELECT new fi.hjhamala.model.AverageTemperatureStatistics(a.sensor.id, AVG(a.value)) FROM AnalogMeasurement a where a.dateTime > :dateTime group by a.sensor.id order by a.sensor.id asc")
+	@Query("SELECT new fi.hjhamala.model.AverageTemperatureStatistics(a.sensor, AVG(a.value)) FROM AnalogMeasurement a where a.dateTime > :dateTime group by a.sensor.id order by a.sensor.id asc")
 	public List<AverageTemperatureStatistics> getAverageTemperatureAfterDateTime(@Param("dateTime") LocalDateTime dateTime);
 	
 }

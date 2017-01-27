@@ -76,4 +76,10 @@ public class Sensor {
 				comp.getGainFactor() == getGainFactor()) 
 				? true : false;
 	}
+
+	public boolean checkAlert(double averageTemperature) {
+		return  (getAlertMax() > averageTemperature && 
+				getAlertMin() < averageTemperature) 
+				? false : true;
+	}
 }

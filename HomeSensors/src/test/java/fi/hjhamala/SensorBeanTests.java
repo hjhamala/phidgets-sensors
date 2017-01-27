@@ -33,6 +33,6 @@ public class SensorBeanTests {
 		sensorRepository.delete(a);
 		assertEquals(0, sensorRepository.count());
 	}
-
+	
 }
 

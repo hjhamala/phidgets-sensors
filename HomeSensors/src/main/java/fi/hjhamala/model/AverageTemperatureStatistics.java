@@ -3,18 +3,18 @@ package fi.hjhamala.model;
 			 
 public class AverageTemperatureStatistics {
 
-		private long sensor_id;
+		private Sensor sensor;
 		private double averageTemperature;
 		
-		public AverageTemperatureStatistics(long sensor_id, Double averageTemperature) {
-			this.sensor_id = sensor_id;
+		public AverageTemperatureStatistics(Sensor sensor_id, Double averageTemperature) {
+			this.sensor = sensor_id;
 			this.averageTemperature = averageTemperature;
 		}
-		public long getSensor_id() {
-			return sensor_id;
+		public Sensor getSensor() {
+			return sensor;
 		}
-		public void setSensor_id(long sensor_id) {
-			this.sensor_id = sensor_id;
+		public void setSensor(Sensor sensor) {
+			this.sensor = sensor;
 		}
 		public double getAverageTemperature() {
 			return averageTemperature;
