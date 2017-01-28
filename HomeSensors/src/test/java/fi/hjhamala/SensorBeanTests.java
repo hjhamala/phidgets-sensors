@@ -31,7 +31,20 @@ public class SensorBeanTests {
 		Sensor saved = sensorRepository.findOne(a.getId());
 		assertEquals(a, saved);
 		sensorRepository.delete(a);
-		assertEquals(0, sensorRepository.count());
+		assertEquals("No sensors after delete", 0, sensorRepository.count());
+	}
+	
+	@Rollback(true)
+	@Test
+	public void testFindActiveSensors() {
+		sensorRepository.deleteAll();
+		Sensor a = new Sensor();
+		a.setActive(true);
+		sensorRepository.save(a);
+		Sensor b = new Sensor();
+		b.setActive(false);
+		sensorRepository.save(b);		
+		assertEquals("Only one active sensor", sensorRepository.findActiveSensors().size(), 1);
 	}
 	
 }
