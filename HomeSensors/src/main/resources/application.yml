@@ -1,6 +1,8 @@
 sensors:
     serial-number: 448438
     temperature-polling-ms: 10000
+    email-address: 
+    email-password: 
     
 spring:
     datasource:

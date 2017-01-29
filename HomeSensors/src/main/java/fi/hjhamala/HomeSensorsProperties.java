@@ -6,6 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class HomeSensorsProperties {
 	private int serialNumber;
 	private int temperaturePollingMs;
+	private String emailAddress;
+	private String emailPassword;
 
 	public int getSerialNumber() {
 		return serialNumber;
@@ -22,5 +24,23 @@ public class HomeSensorsProperties {
 	public void setSerialNumber(int serialNumber) {
 		this.serialNumber = serialNumber;
 	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public String getEmailPassword() {
+		return emailPassword;
+	}
+
+	public void setEmailPassword(String emailPassword) {
+		this.emailPassword = emailPassword;
+	}
+	
+	
 	
 }
