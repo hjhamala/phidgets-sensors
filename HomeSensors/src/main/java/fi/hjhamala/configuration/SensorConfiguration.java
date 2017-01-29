@@ -1,4 +1,4 @@
-package fi.hjhamala;
+package fi.hjhamala.configuration;
 
 import java.util.Properties;
 

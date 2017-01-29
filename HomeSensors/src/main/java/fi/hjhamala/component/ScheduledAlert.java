@@ -20,7 +20,7 @@ import fi.hjhamala.model.Sensor;
 import fi.hjhamala.model.SensorRepository;
 
 @Component
-public class ScheduledMeasurement {
+public class ScheduledAlert {
 	
 	private static final Log log = LogFactory.getLog(HomeSensorsApplication.class);
 	

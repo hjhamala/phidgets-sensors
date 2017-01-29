@@ -1,6 +1,7 @@
 sensors:
     serial-number: 448438
     temperature-polling-ms: 10000
+    temperature-alert-polling-ms: 60000
     email-address: 
     email-password: 
     

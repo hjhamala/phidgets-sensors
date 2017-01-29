@@ -1,4 +1,4 @@
-package fi.hjhamala;
+package fi.hjhamala.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class HomeSensorsProperties {
 	private int serialNumber;
 	private int temperaturePollingMs;
+	private int temperatureAlertPollingMs;
 	private String emailAddress;
 	private String emailPassword;
 
@@ -19,6 +20,14 @@ public class HomeSensorsProperties {
 
 	public void setTemperaturePollingMs(int temperaturePollingMs) {
 		this.temperaturePollingMs = temperaturePollingMs;
+	}
+
+	public int getTemperatureAlertPollingMs() {
+		return temperatureAlertPollingMs;
+	}
+
+	public void setTemperatureAlertPollingMs(int temperatureAlertPollingMs) {
+		this.temperatureAlertPollingMs = temperatureAlertPollingMs;
 	}
 
 	public void setSerialNumber(int serialNumber) {
