@@ -1,7 +1,7 @@
 package fi.hjhamala.model;
 
 			 
-public class AverageTemperatureStatistics {
+public class AverageTemperatureStatistics extends Temperature {
 
 		private Sensor sensor;
 		private double averageTemperature;
@@ -23,5 +23,8 @@ public class AverageTemperatureStatistics {
 			this.averageTemperature = averageTemperature;
 		}
 		
+		public double getCelciusValue(){
+			return measurementValueToCelsiusValue((int) this.averageTemperature);
+		}
 	
 }

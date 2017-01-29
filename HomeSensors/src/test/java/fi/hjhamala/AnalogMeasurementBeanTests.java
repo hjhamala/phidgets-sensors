@@ -1,9 +1,10 @@
 package fi.hjhamala;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -33,10 +34,6 @@ public class AnalogMeasurementBeanTests {
 
 	@Autowired
 	SensorRepository sensorRepository;
-	
-	private static final Log logger = LogFactory
-			.getLog(HomeSensorsApplication.class);
-	
 	
 	@Rollback(true)
 	@Test

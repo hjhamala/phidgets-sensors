@@ -1,21 +1,15 @@
 package fi.hjhamala.model;
 
-import static org.mockito.Matchers.anyLong;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.PostLoad;
-import javax.persistence.Transient;
 
 @Entity
-public class AnalogMeasurement {
+public class AnalogMeasurement extends Temperature{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -71,9 +65,9 @@ public class AnalogMeasurement {
 	public void setSensor(Sensor sensor) {
 		this.sensor = sensor;
 	}
-
+	
 	public double getCelsiusValue(){
-		return getValue()*0.2222-61.111;
+		return measurementValueToCelsiusValue(this.value);
 	}
 	
 	@Override 

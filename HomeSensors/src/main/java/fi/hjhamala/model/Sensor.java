@@ -17,6 +17,7 @@ public class Sensor {
 	private boolean active;
 	private int alertMin;
 	private int alertMax;
+	private boolean alerted;
 	
 	public Long getId() {
 		return id;
@@ -65,6 +66,15 @@ public class Sensor {
 
 	public void setAlertMax(int alertMax) {
 		this.alertMax = alertMax;
+	}
+	
+	
+	public boolean isAlerted() {
+		return alerted;
+	}
+
+	public void setAlerted(boolean alerted) {
+		this.alerted = alerted;
 	}
 
 	@Override
