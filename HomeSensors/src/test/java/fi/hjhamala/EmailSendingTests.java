@@ -1,5 +1,7 @@
 package fi.hjhamala;
 
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,16 @@ public class EmailSendingTests {
 		String fromAddr = "home.sensors.heikki";
 		String subject = "Tämä on sensoritestiviesti";
 		String body = "runkoteksti";
-		emailApi.readyToSendEmail(toAddr, fromAddr, subject, body);
+		boolean exceptionNotThrown = true;
+		try {
+			emailApi.readyToSendEmail(toAddr, fromAddr, subject, body);
+		} catch (Exception e) {
+			exceptionNotThrown = false;
+		}
+		assertTrue("Sending message failed", exceptionNotThrown);
+	}
+		
 	}
 	
-	
-	
-}
+
 

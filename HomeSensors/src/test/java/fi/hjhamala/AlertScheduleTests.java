@@ -54,9 +54,14 @@ public class AlertScheduleTests {
 		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusSeconds(5), 60));
 		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusSeconds(6), 30));
 		
-		assertTrue("Alert should happen", alert.checkAlert());
-		
-		assertTrue("Sensor should have alerted state", sensor1.isAlerted());
+		boolean emailExceptionThrown = false;
+		try {
+			assertTrue("Alert should happen", alert.checkAlert());
+			assertTrue("Sensor should have alerted state", sensor1.isAlerted());
+		} catch (Exception e) {
+			emailExceptionThrown = true;
+		}
+		assertFalse("Email exception should not thrown", emailExceptionThrown);
 		
 	}
 	
