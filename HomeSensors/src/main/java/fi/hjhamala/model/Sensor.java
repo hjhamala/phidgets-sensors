@@ -18,6 +18,7 @@ public class Sensor {
 	private int alertMin;
 	private int alertMax;
 	private boolean alerted;
+	private String description;
 	
 	public Long getId() {
 		return id;
@@ -75,6 +76,16 @@ public class Sensor {
 
 	public void setAlerted(boolean alerted) {
 		this.alerted = alerted;
+	}
+	
+	
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override
