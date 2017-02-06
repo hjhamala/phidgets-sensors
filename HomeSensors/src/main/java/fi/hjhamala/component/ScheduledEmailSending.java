@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import fi.hjhamala.configuration.HomeSensorsProperties;
 import fi.hjhamala.model.Alert;
 import fi.hjhamala.model.AlertRepository;
-import fi.hjhamala.model.Temperature;
 
 @Service
 public class ScheduledEmailSending {
@@ -38,7 +37,7 @@ public class ScheduledEmailSending {
 			String fromAddr = prop.getEmailAddress();
 			String subject = "Hälytys sensoreista";
 			String body = "Sensorissa " + alert.getAlarm().getSensor().getPort() + " on hälytys.\r\n" + 
-			"Lämpötilan keskiarvo on: " + Temperature.measurementValueToCelsiusValue(alert.getValue());
+			"Lämpötilan keskiarvo on: " + alert.getCelsiusValue();
 			emailApi.readyToSendEmail(toAddr, fromAddr, subject, body);
 			alert.setEmailSent(true);
 			alertRepository.save(alert);

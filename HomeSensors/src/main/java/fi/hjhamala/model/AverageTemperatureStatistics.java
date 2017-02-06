@@ -1,7 +1,7 @@
 package fi.hjhamala.model;
 
 			 
-public class AverageTemperatureStatistics extends Temperature {
+public class AverageTemperatureStatistics implements Temperature {
 
 		private Sensor sensor;
 		private AnalogAlarm analogAlarm;

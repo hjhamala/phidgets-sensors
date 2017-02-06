@@ -67,6 +67,9 @@ public class AlertScheduleTests {
 		assertFalse("Immediatly after the alarm - new alarm should not happen", alert.checkAlert());
 	}
 	
+	
+	
+	
 
 	
 	public Sensor initializeSensor(int port){

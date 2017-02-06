@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Alert {
+public class Alert implements Temperature {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -45,6 +45,8 @@ public class Alert {
 		this.emailSent = emailSent;
 	}	
 	
-	
+	public double getCelsiusValue(){
+		return measurementValueToCelsiusValue(this.value);
+	}
 	
 }

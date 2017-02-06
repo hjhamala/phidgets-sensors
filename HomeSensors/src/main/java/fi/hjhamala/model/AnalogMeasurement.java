@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class AnalogMeasurement extends Temperature{
+public class AnalogMeasurement implements Temperature{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
