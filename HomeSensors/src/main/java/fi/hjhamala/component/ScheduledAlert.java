@@ -8,9 +8,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import fi.hjhamala.configuration.HomeSensorsProperties;
+import fi.hjhamala.model.Alert;
+import fi.hjhamala.model.AlertRepository;
 import fi.hjhamala.model.AnalogMeasurementRepository;
 import fi.hjhamala.model.AverageTemperatureStatistics;
-import fi.hjhamala.model.SensorRepository;
 
 @Service
 public class ScheduledAlert {
@@ -20,34 +21,32 @@ public class ScheduledAlert {
 
 	@Autowired
 	private HomeSensorsProperties prop;
-	
+		
 	@Autowired
-	private SensorRepository sensorRepository;
+	private AlertRepository alertRepository;
 	
 	@Autowired
 	EmailAPI emailApi;
 		
 	@Scheduled(fixedDelayString="${sensors.temperature-alert-polling-ms}")
 	public boolean checkAlert() {
+		List<AverageTemperatureStatistics> averages = analogMeasurementRepository.getAverageTemperaturesAfterDateTimeWithAlarms(LocalDateTime.now().minusMinutes(prop.getTemperatureAlertAverageDurationMin()));
 		boolean alerted = false;
-		List<AverageTemperatureStatistics> averages = analogMeasurementRepository.getAverageTemperatureAfterDateTime(LocalDateTime.now().minusMinutes(prop.getTemperatureAlertAverageDurationMin()));
 		
 		for (AverageTemperatureStatistics average : averages){
-			//TODO Constraint can be checked straight in database with having 
-			if (average.getSensor().checkAlert(average.getAverageTemperature()) && !average.getSensor().isAlerted()){
-				alerted = true;
-				String toAddr = prop.getTemperatureAlertEmailAddress();
-				String fromAddr = prop.getEmailAddress();
-				String subject = "Hälytys sensoreista";
-				String body = "Sensorissa " + average.getSensor().getPort() + " on hälytys.\r\n" + 
-				"Lämpötilan keskiarvo on: " + average.getCelciusValue();
-				emailApi.readyToSendEmail(toAddr, fromAddr, subject, body);
-				average.getSensor().setAlerted(true);
-				sensorRepository.save(average.getSensor());
-				
+			if (average.getAnalogAlarm().checkAlert(average.getAverageTemperature())){
+				List<Alert> alerts = alertRepository.getAlertsByPeriod(LocalDateTime.now().minusMinutes(prop.getAlertDelayBeforeNewAlertMin()), average.getAnalogAlarm());
+					if (alerts.isEmpty()){
+						alerted = true;
+						Alert alert = new Alert();
+						alert.setAlarm(average.getAnalogAlarm());
+						alert.setDateTime(LocalDateTime.now());
+						alert.setValue((int) average.getAverageTemperature());
+						alertRepository.save(alert);
+					}
+				}
 			}
-		}
-		
+
 		return alerted;
 	}
 }

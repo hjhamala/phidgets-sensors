@@ -1,16 +1,12 @@
 package fi.hjhamala;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import fi.hjhamala.model.AnalogAlarmRepository;
 import fi.hjhamala.model.AnalogMeasurement;
 import fi.hjhamala.model.AnalogMeasurementRepository;
 import fi.hjhamala.model.AverageTemperatureStatistics;
@@ -34,6 +31,10 @@ public class AnalogMeasurementBeanTests {
 
 	@Autowired
 	SensorRepository sensorRepository;
+	
+	@Autowired
+	AnalogAlarmRepository analogAlarmRepository;
+	
 	
 	@Rollback(true)
 	@Test
@@ -93,30 +94,6 @@ public class AnalogMeasurementBeanTests {
 		
 		
 	}
-	
-	@Rollback(true)
-	@Test
-	@Transactional
-	public void testCheckAlert(){
-		sensorRepository.deleteAll();
-		analogMeasurementRepository.deleteAll();
-		Sensor sensor1 = initializeSensor(0);
-		sensor1.setAlertMin(40);
-		sensor1.setAlertMax(80);
-		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusMinutes(1), 60));
-		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusMinutes(2), 30));
-		List<AverageTemperatureStatistics> avg = analogMeasurementRepository.getAverageTemperatureAfterDateTime(LocalDateTime.now().minusMinutes(3));
-		
-		AverageTemperatureStatistics sensor1Avg= avg.get(0);
-		
-		assertFalse(sensor1Avg.getSensor().checkAlert(sensor1Avg.getAverageTemperature()));
-		// lets add some worrying statistic
-		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusMinutes(1), 180));
-		avg = analogMeasurementRepository.getAverageTemperatureAfterDateTime(LocalDateTime.now().minusMinutes(3));
-		sensor1Avg= avg.get(0);
-		assertTrue(sensor1Avg.getSensor().checkAlert(sensor1Avg.getAverageTemperature()));
-	}
-
 	
 	public Sensor initializeSensor(int port){
 			Sensor sensor = new Sensor();

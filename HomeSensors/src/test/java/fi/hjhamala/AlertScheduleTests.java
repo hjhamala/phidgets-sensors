@@ -1,10 +1,9 @@
 package fi.hjhamala;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -18,9 +17,10 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import fi.hjhamala.component.ScheduledAlert;
+import fi.hjhamala.model.AnalogAlarm;
+import fi.hjhamala.model.AnalogAlarmRepository;
 import fi.hjhamala.model.AnalogMeasurement;
 import fi.hjhamala.model.AnalogMeasurementRepository;
-import fi.hjhamala.model.AverageTemperatureStatistics;
 import fi.hjhamala.model.Sensor;
 import fi.hjhamala.model.SensorRepository;
 
@@ -38,8 +38,8 @@ public class AlertScheduleTests {
 	@Autowired
 	SensorRepository sensorRepository;
 	
-	private static final Log logger = LogFactory
-			.getLog(HomeSensorsApplication.class);
+	@Autowired
+	AnalogAlarmRepository analogAlarmRepository;
 	
 	@Rollback(true)
 	@Test
@@ -47,22 +47,24 @@ public class AlertScheduleTests {
 	public void testAlerts(){
 		sensorRepository.deleteAll();
 		analogMeasurementRepository.deleteAll();
+		analogAlarmRepository.deleteAll();
+		
 		Sensor sensor1 = initializeSensor(0);
-		sensor1.setAlertMin(50);
-		sensor1.setAlertMax(60);
-
+		AnalogAlarm alarm = new AnalogAlarm();
+		alarm.setSensor(sensor1);
+		alarm.setAlertMin(50);
+		alarm.setAlertMax(60);
+		analogAlarmRepository.save(alarm);
+		sensorRepository.save(sensor1);
+		
 		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusSeconds(5), 60));
-		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusSeconds(6), 30));
+		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusSeconds(6), 45));
+		assertFalse("Alert should not be risen", alert.checkAlert());
 		
-		boolean emailExceptionThrown = false;
-		try {
-			assertTrue("Alert should happen", alert.checkAlert());
-			assertTrue("Sensor should have alerted state", sensor1.isAlerted());
-		} catch (Exception e) {
-			emailExceptionThrown = true;
-		}
-		assertFalse("Email exception should not thrown", emailExceptionThrown);
-		
+		// lets add some worrying statistic
+		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusMinutes(1), 180));
+		assertTrue("Alert should happen", alert.checkAlert());
+		assertFalse("Immediatly after the alarm - new alarm should not happen", alert.checkAlert());
 	}
 	
 

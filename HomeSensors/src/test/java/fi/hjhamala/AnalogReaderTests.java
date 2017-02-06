@@ -1,6 +1,6 @@
 package fi.hjhamala;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,11 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.phidgets.PhidgetException;
-
 import fi.hjhamala.component.AnalogReader;
-import fi.hjhamala.model.Sensor;
-import fi.hjhamala.model.SensorRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
