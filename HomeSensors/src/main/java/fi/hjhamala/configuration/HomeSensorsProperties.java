@@ -8,6 +8,7 @@ public class HomeSensorsProperties {
 	private int temperaturePollingMs;
 	private int temperatureAlertPollingMs;
 	private int temperatureAlertAverageDurationMin;
+	private int alertDelayBeforeNewAlertMin;
 	private String temperatureAlertEmailAddress; 
 	private String emailAddress;
 	private String emailPassword;
@@ -47,6 +48,14 @@ public class HomeSensorsProperties {
 
 	public void setTemperatureAlertEmailAddress(String temperatureAlertEmailAddress) {
 		this.temperatureAlertEmailAddress = temperatureAlertEmailAddress;
+	}
+	
+		public int getAlertDelayBeforeNewAlertMin() {
+		return alertDelayBeforeNewAlertMin;
+	}
+
+	public void setAlertDelayBeforeNewAlertMin(int alertDelayBeforeNewAlertMin) {
+		this.alertDelayBeforeNewAlertMin = alertDelayBeforeNewAlertMin;
 	}
 
 	public void setSerialNumber(int serialNumber) {
