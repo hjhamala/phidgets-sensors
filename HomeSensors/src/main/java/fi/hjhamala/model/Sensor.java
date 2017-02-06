@@ -15,9 +15,6 @@ public class Sensor {
 	private int type;
 	private double gainFactor;
 	private boolean active;
-	private int alertMin;
-	private int alertMax;
-	private boolean alerted;
 	private String description;
 	
 	public Long getId() {
@@ -52,33 +49,6 @@ public class Sensor {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
-	public int getAlertMin() {
-		return alertMin;
-	}
-
-	public void setAlertMin(int alertMin) {
-		this.alertMin = alertMin;
-	}
-
-	public int getAlertMax() {
-		return alertMax;
-	}
-
-	public void setAlertMax(int alertMax) {
-		this.alertMax = alertMax;
-	}
-	
-	
-	public boolean isAlerted() {
-		return alerted;
-	}
-
-	public void setAlerted(boolean alerted) {
-		this.alerted = alerted;
-	}
-	
-	
 	
 	public String getDescription() {
 		return description;
@@ -87,7 +57,7 @@ public class Sensor {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	
 	@Override
 	public boolean equals(Object a){
 		Sensor comp = (Sensor) a;
@@ -98,9 +68,5 @@ public class Sensor {
 				? true : false;
 	}
 
-	public boolean checkAlert(double averageTemperature) {
-		return  (getAlertMax() > averageTemperature && 
-				getAlertMin() < averageTemperature) 
-				? false : true;
-	}
+	
 }
