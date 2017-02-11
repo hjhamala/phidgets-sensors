@@ -15,5 +15,5 @@ CREATE TABLE IF NOT EXISTS `analog_measurement` (
   PRIMARY KEY (`id`),
   KEY `fk_analog_measurement_1_idx` (`sensor_id`),
   CONSTRAINT `fk_analog_measurement_1` FOREIGN KEY (`sensor_id`) REFERENCES `sensor` (`id`) ON DELETE CASCADE
-ON UPDATE CASCADE
+ON UPDATE CASCADE 
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

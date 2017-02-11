@@ -41,13 +41,12 @@ public class AlertScheduleTests {
 	@Autowired
 	AnalogAlarmRepository analogAlarmRepository;
 	
-	@Rollback(true)
+	
 	@Test
-	@Transactional
 	public void testAlerts(){
-		sensorRepository.deleteAll();
 		analogMeasurementRepository.deleteAll();
 		analogAlarmRepository.deleteAll();
+		sensorRepository.deleteAll();
 		
 		Sensor sensor1 = initializeSensor(0);
 		AnalogAlarm alarm = new AnalogAlarm();
@@ -62,9 +61,14 @@ public class AlertScheduleTests {
 		assertFalse("Alert should not be risen", alert.checkAlert());
 		
 		// lets add some worrying statistic
-		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusMinutes(1), 180));
+		analogMeasurementRepository.saveAndFlush(new AnalogMeasurement(sensor1, LocalDateTime.now().minusMinutes(1), 180));
+		
 		assertTrue("Alert should happen", alert.checkAlert());
 		assertFalse("Immediatly after the alarm - new alarm should not happen", alert.checkAlert());
+		analogMeasurementRepository.deleteAll();
+		analogAlarmRepository.deleteAll();
+		sensorRepository.deleteAll();
+		
 	}
 	
 	

@@ -13,5 +13,5 @@ CREATE TABLE `sensors`.`alert` (
   CONSTRAINT `fk_alert_1`
     FOREIGN KEY (`analog_alarm_id`)
     REFERENCES `sensors`.`analog_alarm` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
