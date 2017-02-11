@@ -12,6 +12,6 @@ public interface AlertRepository extends JpaRepository<Alert, Integer> {
 	@Query("SELECT a from Alert a where a.emailSent = false")
 	public List<Alert> getAlertsNotSent();
 	
-	@Query("SELECT a from Alert a where a.emailSent = false AND a.analogAlarm = :alarm AND a.dateTime > :dateTime ")
+	@Query("SELECT a from Alert a where a.analogAlarm = :alarm AND a.dateTime > :dateTime ")
 	public List<Alert> getAlertsByPeriod(@Param("dateTime") LocalDateTime dateTime, @Param("alarm") AnalogAlarm alarm);
 }
