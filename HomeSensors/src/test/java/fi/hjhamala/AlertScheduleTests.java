@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -44,17 +45,15 @@ public class AlertScheduleTests {
 	
 	@Test
 	public void testAlerts(){
-		analogMeasurementRepository.deleteAll();
-		analogAlarmRepository.deleteAll();
 		sensorRepository.deleteAll();
 		
 		Sensor sensor1 = initializeSensor(0);
+		sensorRepository.saveAndFlush(sensor1);
 		AnalogAlarm alarm = new AnalogAlarm();
 		alarm.setSensor(sensor1);
 		alarm.setAlertMin(50);
 		alarm.setAlertMax(60);
-		analogAlarmRepository.save(alarm);
-		sensorRepository.save(sensor1);
+		analogAlarmRepository.saveAndFlush(alarm);
 		
 		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusSeconds(5), 60));
 		analogMeasurementRepository.save(new AnalogMeasurement(sensor1, LocalDateTime.now().minusSeconds(6), 45));
@@ -62,6 +61,7 @@ public class AlertScheduleTests {
 		
 		// lets add some worrying statistic
 		analogMeasurementRepository.saveAndFlush(new AnalogMeasurement(sensor1, LocalDateTime.now().minusMinutes(1), 180));
+		List<AnalogMeasurement> al = analogMeasurementRepository.findAll();
 		
 		assertTrue("Alert should happen", alert.checkAlert());
 		assertFalse("Immediatly after the alarm - new alarm should not happen", alert.checkAlert());
