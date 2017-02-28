@@ -103,6 +103,7 @@
         		<configuration>
           		<excludes>
             			<exclude>**/AnalogReaderTests.java</exclude>
+            			<exclude>**/DigitalOutputTests.java</exclude>
   		        </excludes>
         </configuration>
       </plugin>

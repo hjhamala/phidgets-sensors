@@ -10,17 +10,10 @@ import fi.hjhamala.configuration.HomeSensorsProperties;
 public class AnalogReader {
 	
 	@Autowired
-	private HomeSensorsProperties properties;	
-	
-	private InterfaceKitPhidget ik;
+	private PhidgetsKit ik;
 	
 	public int getValue(int port) throws PhidgetException{
-		if (ik == null){
-			ik = new InterfaceKitPhidget();
-			ik.open(properties.getSerialNumber());
-			ik.waitForAttachment(10);
-		}
-		return ik.getSensorValue(port);
+		return ik.getIk().getSensorValue(port);
 	}
 
 }
